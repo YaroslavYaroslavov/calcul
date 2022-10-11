@@ -17,13 +17,13 @@ let firstOperand = 0;
 let currentOperation = '';
 
 const clearDisplay = () => {
-    display.textContent = 0
+    display.textContent = '0'
     currentNumber = '0'
 
 }
 
 const updateOperation = (e) => {
-    firstOperand = Number(currentNumber)
+    if (Number(currentNumber) !== 0) { firstOperand = Number(currentNumber) }
     currentFirstOperand.textContent = firstOperand
     currentOperationElement.textContent = e.target.textContent
     currentFunc.style.fontSize = '25px';
@@ -73,8 +73,16 @@ const solve = () => {
         result = Number(result.replace(/^0+/, ''))
     }
     checkSize(result)
+
+    firstOperand = 0;
+    currentOperation = ''
+    currentFirstOperand.textContent = ''
+    currentOperationElement.textContent = currentOperation
+    currentFunc.style.fontSize = '0px'
     display.textContent = result
     currentNumber = String(result)
+
+
 }
 const toDisplay = (event) => {
     checkSize(currentNumber)
@@ -83,11 +91,11 @@ const toDisplay = (event) => {
         return
     }
 
+
     if (!currentNumber.includes('.') || event.target.textContent !== '.') {
 
         currentNumber += event.target.textContent
         currentNumber = currentNumber.replace(/^0+/, '')
-            // Array.from(currentNumber).push('0')
     }
 
     if (currentNumber[0] === '.') {
@@ -115,19 +123,24 @@ backspaceBtn.addEventListener('click', () => {
 })
 
 multiplyBtn.addEventListener('click', (event) => {
-    if (currentOperation === 'multiply') solve()
+    if (currentOperation === 'multiply') { solve() }
     currentOperation = 'multiply'
     updateOperation(event)
 })
 splitBtn.addEventListener('click', (event) => {
-    if (currentOperation === 'split') solve()
+    if (currentOperation === 'split') { solve() }
     currentOperation = 'split'
     updateOperation(event)
 
 })
 minusBtn.addEventListener('click', (event) => {
+    if (currentOperation === 'minus') {
+        solve()
+    }
+    console.log(currentNumber)
     if (currentNumber === '0') {
-        currentNumber = '0'
+        currentNumber = '-'
+        display.textContent = currentNumber
         return
     } // Бля сделай отрицание первого операнда пж
 
@@ -138,7 +151,9 @@ minusBtn.addEventListener('click', (event) => {
 clearBtn.addEventListener('click', clearDisplay)
 
 plusBtn.addEventListener('click', (event) => {
-    if (currentOperation === 'plus') solve()
+    if (currentOperation === 'plus') {
+        solve()
+    }
     currentOperation = 'plus'
     updateOperation(event)
 })
