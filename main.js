@@ -142,8 +142,7 @@ minusBtn.addEventListener('click', (event) => {
         currentNumber = '-'
         display.textContent = currentNumber
         return
-    } // Бля сделай отрицание первого операнда пж
-
+    }
     if (currentOperation === 'minus') solve()
     currentOperation = 'minus'
     updateOperation(event)
